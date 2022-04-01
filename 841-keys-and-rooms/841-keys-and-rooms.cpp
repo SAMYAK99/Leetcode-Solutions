@@ -1,36 +1,28 @@
 class Solution {
 public:
     
-    // Simple BFS
+    // By Simple DFS Call
+    
+    void dfs(vector<vector<int>>& rooms  , vector<int> &vis , int i){
+        vis[i] = 1 ; 
+        
+       for(auto it : rooms[i]){ 
+        if(!vis[it])
+        dfs(rooms,vis,it);
+       }
+        
+    }
+    
     
     bool canVisitAllRooms(vector<vector<int>>& rooms) {
         
         int n = rooms.size() ; 
         vector<int> vis(n,0);
-        queue<int> q ; 
+       
+         // vis[0] = 1 ; 
+        dfs(rooms , vis , 0);
         
-        vis[0] = 1 ; 
-        
-       for(int i=0;i<rooms[0].size();i++){
-            q.push(rooms[0][i]);
-        }
-        
-     
-        
-        // BFS Traversal
-        while(!q.empty()){
-           int j = q.front();
-            q.pop();
-            while(!vis[j]){
-                vis[j] = 1 ; 
-                 for(int i=0;i<rooms[j].size();i++){
-                    q.push(rooms[j][i]);
-                }
-            }
-                
-        }
-        
-      // If any visited array can't be visited   
+      // If any visited array can't be visited again return false
         for(auto x : vis){
             if(x == 0)
                 return false ; 
