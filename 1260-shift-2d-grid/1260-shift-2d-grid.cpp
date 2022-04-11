@@ -2,20 +2,21 @@ class Solution {
 public:
     vector<vector<int>> shiftGrid(vector<vector<int>>& grid, int k) {
         
-       int n=grid.size();
-        int m=grid[0].size();
-        vector<vector<int>> ans(n,vector<int>(m));
+        int m = grid.size(); //rows
+        int n = grid[0].size(); //cols
+        vector<vector<int>> temp(m, vector<int>(n, 0));
+
+        // shifting :( r*n + c ) + k 
         
-        for(int i=0;i<n;i++){
-            for(int j=0;j<m;j++){
+        for(int r = 0; r < m; r++) {
+            for(int c = 0; c < n; c++) {
+                int newVal = ((r*n + c) + k) % (m*n);
+                int newr = newVal/n;
+                int newc = newVal%n;
+                temp[newr][newc] = grid[r][c];
                 
-                int newJ=(j+k)%m; // (j + numbers of columns added)%m
-                
-                int newI=(i+(j+k)/m)%n; // (i + numbers of rows added)%n 
-                
-                ans[newI][newJ]=grid[i][j];
             }
         }
-        return ans;
+        return temp;
     }
 };
