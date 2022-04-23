@@ -1,17 +1,24 @@
 class Solution {
 public:
 
-    // Brute Force : Don't Encode
+    // HashMap
+     map<string,string> mp;
+     int i =0 ; 
+  
     // Encodes a URL to a shortened URL.
     string encode(string longUrl) {
         
-        return longUrl ; 
+        string str = std::to_string(i);
+        mp[str] = longUrl ; 
+        i++;
+        return str ;
+       
     }
 
     // Decodes a shortened URL to its original URL.
     string decode(string shortUrl) {
         
-          return shortUrl ; 
+          return mp[shortUrl] ; 
     }
 };
 
