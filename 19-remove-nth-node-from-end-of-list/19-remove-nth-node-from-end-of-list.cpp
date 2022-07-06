@@ -9,31 +9,34 @@
  * };
  */
 class Solution {
+    /*
+     between the fast and slow pointers, there is a gap of n nodes. Now, just Iterate and increment both the pointers till fast reaches the last node. The gap between fast and slow is still of n nodes, meaning that slow is nth node from the last node (which currently is fast).
+    */
+    
 public:
     ListNode* removeNthFromEnd(ListNode* head, int n) {
         
-    ListNode* iter = head;
-	int len = 0, i = 1;
+     auto slow = head , fast = head ; 
         
-    // finding the length of linked list    
-	while(iter){
-         iter = iter -> next ;
-         len++; 
-    }
+        // Placing fast pointer to nth pos from start
+        while(n--)
+            fast = fast -> next ;
         
-    // if head itself is to be deleted, just return head -> next    
-	if(len == n)
-        return head -> next;  
+        // if fast is already null, it means we have to delete 
+        // head itself. So, just return next of head
+        if(fast == NULL)
+             return head->next;
         
-    // iterate first len-n nodes    
-	for(iter = head; i < len - n; i++){
-        iter = iter -> next;  
-    }   
-   
-   // remove the nth node from the end
-        iter -> next = iter -> next -> next;
+        // iterate till fast reaches the last node of list
+        while(fast->next != NULL){
+            fast = fast-> next;
+            slow = slow -> next ;
+        }
         
+        // Remove nth node from last
+        slow->next = slow->next->next;
         
-	return head;
+        return head ;
+            
     }
 };
