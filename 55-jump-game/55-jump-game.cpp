@@ -1,18 +1,21 @@
 class Solution {
 public:
+    
+    // Simple Brute Force (DP) Approach
+    
     bool canJump(vector<int>& nums) {
         
         int n = nums.size();
-        int reach = 0 ;
         
-        for(int i=0 ;i<n ;i++){
-            
-            // We can't reached at last as there is no jumps left
-            if(reach < i)
-                return false ; 
-            reach = max(reach , i + nums[i]);
+        // what is the last value i can reach
+        int last = n-1 ; 
+        
+        for(int i=n-2 ;i>=0 ;i--){
+          // from every ith check weather i can reach to end from the latest last postion  
+         if(i + nums[i] >= last)
+            last = i ; 
         }
         
-        return true ; 
+        return (last == 0 ); 
     }
 };
