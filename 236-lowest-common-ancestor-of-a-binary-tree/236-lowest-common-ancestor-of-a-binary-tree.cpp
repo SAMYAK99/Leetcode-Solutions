@@ -29,7 +29,7 @@ public:
         else if(right == NULL)
             return left;
         
-        // If both p and q are found
+        // If both p and q are found : both are non null
         else
             return root ; 
         
