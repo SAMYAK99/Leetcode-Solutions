@@ -13,6 +13,8 @@ public:
                     dp[i][j] = 1 ;
                 
                 else
+                    //Since the robot can only move right and down, when it arrives
+                    // at a point, it either arrives from left or above. 
                     dp[i][j] = dp[i-1][j] + dp[i][j-1];
             }
         }
