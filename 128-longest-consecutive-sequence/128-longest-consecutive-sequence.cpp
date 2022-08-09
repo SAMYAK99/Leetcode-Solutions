@@ -2,18 +2,29 @@ class Solution {
 public:
     int longestConsecutive(vector<int>& nums) {
     
-        if(!size(nums)) return 0;
+       unordered_set<int> hashSet ;
+        for(auto it : nums)
+            hashSet.insert(it);
         
-	  sort(begin(nums), end(nums));
-	int longest = 0, cur_longest = 1;
+        int longestStreak = 0 ;
+        for(int num : nums){
+            
+            // If a number lesser than current exist in the set or not ? 
+            if(!hashSet.count(num-1)){
+                int currentNum = num;
+                int currentStreak = 1 ;
+                
+                // checking if next number exist or not
+                while(hashSet.count(currentNum+1)){
+                    currentNum++;
+                    currentStreak++;
+                }
+                
+                longestStreak = max(longestStreak,currentStreak);
+            }
+        }
         
-	for(int i = 1; i < size(nums); i++) 
-		if(nums[i] == nums[i - 1]) continue;
-		else if(nums[i] == nums[i - 1] + 1) cur_longest++; // consecutive element - update                                                                  current streak length
-		else longest = max(longest, cur_longest), cur_longest = 1;  // reset current streak length
+        return longestStreak ;
         
-        
-	return max(longest, cur_longest);
     }
-    
 };
