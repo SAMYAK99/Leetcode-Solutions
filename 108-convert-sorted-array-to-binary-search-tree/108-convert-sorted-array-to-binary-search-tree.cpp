@@ -14,6 +14,7 @@ public:
     
     /*
     -> Key is to put the use the middle element of the sorted array as the root node
+       always and to make sure we have equal elements in right and left subtree
     */
     
     TreeNode* buildBST (vector<int> arr , int start , int end ){
