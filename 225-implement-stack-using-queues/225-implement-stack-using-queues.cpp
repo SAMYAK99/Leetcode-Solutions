@@ -6,7 +6,7 @@ public:
    */
     
     queue<int> q1;
-    queue<int> q2;
+   
     
     MyStack() {
         
@@ -14,13 +14,15 @@ public:
     
     void push(int x) {
         
-       q2.push(x);
-        while(!q1.empty()){
-            q2.push(q1.front());
+       q1.push(x);
+       int n = q1.size();
+       n = n-1;
+        
+        while(n--){
+            q1.push(q1.front());
             q1.pop();
         }
         
-        swap(q2,q1);
     }
     
     int pop() {
