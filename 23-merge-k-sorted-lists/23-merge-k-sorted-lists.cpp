@@ -8,43 +8,70 @@
  *     ListNode(int x, ListNode *next) : val(x), next(next) {}
  * };
  */
+
+  /*
+     IDEA : Merge k sorted arrays using Min Heap
+     time complexity: O(nlog2k)
+     space complexity: O(k) (for using priority queue)
+    */
+
+//compare function for priority queue
+class Compare{
+public:
+    bool operator() (const ListNode* n1, const ListNode* n2){
+        return (n1->val) > (n2->val);
+    }
+};
+
+
 class Solution {
 public:
-    /*
-    The basic idea is really simple. We can merge first two lists and then
-    push it back. Keep doing this until there is only one list left in vector.
-    Actually, we can regard this as an iterative divide-and-conquer solution.    
-    */
-    
-    ListNode* merge(ListNode* l1 , ListNode* l2){
-        if(l1 == NULL)
-            return l2;
-        
-        if(l2 == NULL)
-            return l1;
-        
-        if(l1->val <= l2->val){
-            l1->next =  merge(l1->next,l2);
-            return l1;
-        }
-        else{
-            l2->next =  merge(l1,l2->next);
-            return l2;
-        }
-    }
-    
+ 
     ListNode* mergeKLists(vector<ListNode*>& lists) {
          
          if(lists.size() == 0)
-             return nullptr ; 
+             return NULL ;
         
-        while(lists.size() > 1){
-            lists.push_back(merge(lists[0],lists[1]));
-            // Erasing first and second lists from Lists
-            lists.erase(lists.begin());
-            lists.erase(lists.begin());
+        // min heap
+        priority_queue<ListNode* , vector<ListNode*> , Compare> pq;
+        
+        // pushing every first charachter of all list in heap
+        for(int i=0 ;i<lists.size();i++){
+            if(lists[i] != NULL)
+                pq.push(lists[i]);
         }
         
-        return lists.front();
+        // Storing Previous Pointer so we can connect previous and next node
+        ListNode* prev = NULL ;
+        ListNode* head = NULL ;
+        
+        // MIN HEAP
+        while(!pq.empty()){
+            
+            ListNode* node = pq.top();
+            pq.pop();
+            
+            // For the first pointer
+            if(prev == NULL){
+                head = node;
+            }
+            // for others
+            else{
+                prev->next = node;
+            }
+            
+            
+            prev = node;
+            
+            // Pushing other node of same LINKED_LIST in Heap
+            if(node->next != NULL){
+                pq.push(node->next);
+            }
+            
+        }
+        
+        return head ; 
+           
+        
     }
 };
